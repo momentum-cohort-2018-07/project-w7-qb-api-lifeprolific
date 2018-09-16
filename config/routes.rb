@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         end
       end
       resources :users, only: [:index, :create, :show, :update, :destroy]
+      get '/request_token', to: 'users#request_token'
     end
   end
 
