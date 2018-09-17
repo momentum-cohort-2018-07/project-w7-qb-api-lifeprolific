@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
+  protect_from_forgery unless: -> { request.format.json? }
   helper_method :current_user
   helper_method :logged_in?
-  helper_method :authenticate
+  helper_method :authenticate_token
 
   protected
 
@@ -14,11 +15,8 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_token
-    authenticate_or_request_with_http_token do |token, options|
-      # Compare the tokens in a time-constant manner, to mitigate
-      # timing attacks.
-      User.find_by_auth_token(token)
-    end
+    puts "authenticating token: " + ActionController::HttpAuthentication::Token.token_and_options(request)[0]
+    User.find_by api_token: ActionController::HttpAuthentication::Token.token_and_options(request)[0]
   end
 
 end
