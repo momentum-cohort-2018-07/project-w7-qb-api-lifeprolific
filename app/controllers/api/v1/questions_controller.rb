@@ -48,6 +48,18 @@ class Api::V1::QuestionsController < ApplicationController
     end
   end
 
+  def destroy
+    if authenticate_token && authenticate_token.id == @question.user_id
+      @question.destroy
+      render :json => {
+        status: :destroyed}
+    else
+      render :json => {
+        error: "invalid authentication token",
+      }
+    end
+  end
+
   private
 
   def set_question
