@@ -1,6 +1,5 @@
 class Api::V1::QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
-  before_action :authenticate_token, except: [ :index, :show ]
 
   def index
     @questions = Question.page(params[:page]).per(10)
@@ -20,6 +19,23 @@ class Api::V1::QuestionsController < ApplicationController
       if @question.save
         render :json => {
           status: :created, id: @question.id}
+      else
+        render :json => {
+          errors: @question.errors,
+          status: :unprocessable_entity}
+      end
+    else
+      render :json => {
+        error: "invalid authentication token",
+      }
+    end
+  end
+
+  def update
+    if authenticate_token && authenticate_token.id == @question.user_id
+      if @question.update(params.permit(:title, :body).merge({user_id: authenticate_token.id}))
+        render :json => {
+          status: :updated, id: @question.id}
       else
         render :json => {
           errors: @question.errors,
