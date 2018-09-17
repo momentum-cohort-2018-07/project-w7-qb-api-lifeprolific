@@ -3,11 +3,11 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :questions, only: [:index, :create, :show, :update, :destroy] do
-        resources :answers, only: [:index, :create, :show, :update, :destroy] do
-          resources :votes, only: [:create, :destroy]
+        resources :answers, only: [:create, :update, :destroy] do
+          resources :votes, only: [:create]
         end
       end
-      resources :users, only: [:index, :create, :show, :update, :destroy]
+      resources :users, only: [:create, :show, :update, :destroy]
       get '/request_token', to: 'users#request_token'
     end
   end

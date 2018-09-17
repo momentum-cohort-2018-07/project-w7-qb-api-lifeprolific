@@ -15,7 +15,6 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_token
-    puts "authenticating token: " + ActionController::HttpAuthentication::Token.token_and_options(request)[0]
     User.find_by api_token: ActionController::HttpAuthentication::Token.token_and_options(request)[0]
   end
 
