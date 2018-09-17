@@ -1,4 +1,83 @@
-# QuestionBox API
+#LIFO API documentation
+
+## Endpoints
+for all endpoints with token authentication required, include the user's bearer token in the API request
+
+### User endpoints
+
+#### Create New User
+POST	/api/v1/users(.:format)	
+include username, email, and password fields in your API request params
+
+#### Show User Profile And Questions
+GET	/api/v1/users/:id(.:format)	
+no authentication required
+
+#### Update User Profile
+PATCH	/api/v1/users/:id(.:format)	
+include username, email, or password fields in your API request params
+token authentication required
+
+#### Delete user Profile
+DELETE	/api/v1/users/:id(.:format)	
+token authentication required
+
+#### Request Bearer Token
+GET	/api/v1/request_token(.:format)
+include username and password fields in your API request params
+api/v1/users#request_token
+
+### Question endpoints
+
+#### 
+GET	/api/v1/questions(.:format)	
+api/v1/questions#index
+
+#### 
+POST	/api/v1/questions(.:format)	
+api/v1/questions#create
+token authentication required
+
+#### 
+GET	/api/v1/questions/:id(.:format)	
+api/v1/questions#show
+
+#### 
+PATCH	/api/v1/questions/:id(.:format)	
+api/v1/questions#update
+token authentication required
+
+#### 
+DELETE	/api/v1/questions/:id(.:format)	
+api/v1/questions#destroy
+token authentication required
+
+### Answer endpoints
+
+#### 
+POST	/api/v1/questions/:question_id/answers(.:format)	
+api/v1/answers#create
+token authentication required
+
+#### 
+PATCH	/api/v1/questions/:question_id/answers/:id(.:format)	
+api/v1/answers#update
+token authentication required
+
+#### 
+DELETE	/api/v1/questions/:question_id/answers/:id(.:format)	
+api/v1/answers#destroy
+token authentication required
+
+### Vote endpoint
+
+#### 
+POST	/api/v1/questions/:question_id/answers/:answer_id/votes(.:format)	
+api/v1/votes#create
+token authentication required
+
+
+## QuestionBox API
 
 ## Description
 
