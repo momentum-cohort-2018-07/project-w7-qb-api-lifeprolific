@@ -7,4 +7,6 @@ class User < ApplicationRecord
   has_one_attached :avatar
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true
+  include PgSearch
+  multisearchable :against => [:username]
 end
