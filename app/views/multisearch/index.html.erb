@@ -1,2 +1,17 @@
 <%= render 'header' %>
 <h1>Multisearch Results</h1>
+<ul>
+  <% @results.each do |result| %>
+    <% case result.searchable.class.to_s %>
+    <% when "Question" %>
+      <li>in question: <%= link_to result.searchable.title, question_path(result.searchable) %></li>
+      <p><%= result.searchable.body[0...100] + "..." %></p></li>
+    <% when "Answer" %>
+      <li>in answer to: <%= link_to result.searchable.question.title, question_path(result.searchable.question) %>
+      <p><%= result.searchable.body[0...100] + "..." %></p></li>
+    <% when "User" %>
+      <li><%= link_to result.searchable.username + " (user)", user_path(result.searchable) %></li>
+    <% end %>
+
+  <% end %>
+</ul>
