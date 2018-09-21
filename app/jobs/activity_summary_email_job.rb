@@ -2,11 +2,8 @@ class ActivitySummaryEmailJob < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    User.all.first do |user|
-      puts "inside loop"
-      UserMailer.activity_summary_email.deliver_later
+    User.all.each do |user|
+      UserMailer.with(user: user).activity_summary_email.deliver_later
     end
-    puts "after loop"
-    # UserMailer.activity_summary_email.deliver_later
   end
 end

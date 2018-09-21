@@ -8,6 +8,7 @@ class UserMailer < ApplicationMailer
   end
 
   def activity_summary_email
+    @user = params[:user]
     mail(to: "gregorysdtaylor@gmail.com", subject: 'lifo activity summary')
   end
 
